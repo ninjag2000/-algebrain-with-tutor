@@ -1,0 +1,33 @@
+{
+  "name": "algebrain-with-tutor",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "ios:sync": "cap sync ios",
+    "ios:build": "npm run build && cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/ios": "^8.1.0",
+    "@capacitor/live-updates": "^0.5.0",
+    "@capacitor/splash-screen": "^8.0.1",
+    "@google/genai": "^1.40.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "katex": "0.16.11",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.1.0",
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

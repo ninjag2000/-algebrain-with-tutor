@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "appId": "YOUR_APPFLOW_APP_ID",
+      "webBuildCommand": "npm run build",
+      "iosPath": "ios/App",
+      "androidPath": "android"
+    }
+  ]
+}

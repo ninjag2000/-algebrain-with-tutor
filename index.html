@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>AlgeBrain</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0F1115">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      html, body { height: 100%; margin: 0; }
+      #root { min-height: 100%; height: 100%; }
+      body {
+        overscroll-behavior-y: contain;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Inter', sans-serif;
+        background: radial-gradient(
+          circle at 50% 20%,
+          rgba(91,140,255,0.08),
+          transparent 40%
+        ),
+        linear-gradient(180deg, #0B0F1A 0%, #121826 100%);
+      }
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      
+      @keyframes scan {
+        0% { top: 0%; }
+        100% { top: 100%; }
+      }
+      .animate-scan {
+        animation: scan 2s linear infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(58, 141, 255, 0.4), 0 0 30px rgba(108, 92, 231, 0.2); }
+        50% { box-shadow: 0 0 35px rgba(58, 141, 255, 0.6), 0 0 45px rgba(108, 92, 231, 0.4); }
+      }
+      .animate-pulse-glow {
+        animation: pulse-glow 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(-2deg); }
+        50% { transform: translateY(-15px) rotate(2deg); }
+      }
+      .animate-float { animation: float 8s ease-in-out infinite; }
+      .animate-float-delay-1 { animation: float 9s ease-in-out infinite 1s; }
+      .animate-float-delay-2 { animation: float 10s ease-in-out infinite 0.5s; }
+      .animate-float-delay-3 { animation: float 7s ease-in-out infinite 1.5s; }
+
+      @keyframes scan-frame-pulse {
+        0%, 100% { border-color: rgba(58, 141, 255, 0.4); box-shadow: 0 0 15px rgba(58, 141, 255, 0.2); }
+        50% { border-color: rgba(58, 141, 255, 0.7); box-shadow: 0 0 25px rgba(58, 141, 255, 0.4); }
+      }
+      .animate-scan-frame-pulse { animation: scan-frame-pulse 3s ease-in-out infinite; }
+
+      @keyframes glow-ring-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.5; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+      }
+      .animate-glow-ring-pulse { animation: glow-ring-pulse 3s ease-in-out infinite; }
+
+      /* New Animations for ScanScreen Overhaul */
+      @keyframes neural-flow {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
+      }
+      .animate-neural-flow {
+        animation: neural-flow 10s linear infinite;
+      }
+
+      @keyframes capture-glow {
+        0%, 100% { transform: scale(1); box-shadow: 0 0 20px #3A8DFF, 0 0 30px #6C5CE7; }
+        50% { transform: scale(1.03); box-shadow: 0 0 35px #3A8DFF, 0 0 50px #6C5CE7; }
+      }
+      .animate-capture-glow { animation: capture-glow 4s ease-in-out infinite; }
+      
+      @keyframes orbit {
+        from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+        to   { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+      }
+      .animate-orbit { animation: orbit 10s linear infinite; }
+      
+      @keyframes cyan-glow-pulse {
+        0%, 100% { box-shadow: 0 0 8px rgba(127, 231, 255, 0.5); }
+        50% { box-shadow: 0 0 16px rgba(127, 231, 255, 0.8); }
+      }
+      .animate-cyan-glow-pulse { animation: cyan-glow-pulse 2.5s ease-in-out infinite; }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+      }
+      .animate-mascot-blink { animation: blink 3s ease-in-out infinite; }
+
+      @keyframes mascot-glow-pulse {
+        0% { filter: drop-shadow(0 0 0px rgba(127, 231, 255, 0)); }
+        50% { filter: drop-shadow(0 0 10px rgba(127, 231, 255, 0.4)); }
+        100% { filter: drop-shadow(0 0 0px rgba(127, 231, 255, 0)); }
+      }
+      .animate-mascot-glow-pulse { animation: mascot-glow-pulse 2s ease-in-out infinite; }
+
+      /* HUD Animations */
+      @keyframes streak-glow {
+        0%, 100% { filter: drop-shadow(0 0 3px rgba(255, 120, 40, 0.5)); }
+        50% { filter: drop-shadow(0 0 8px rgba(255, 150, 80, 0.8)); }
+      }
+      .animate-streak-glow { animation: streak-glow 2.5s ease-in-out infinite; }
+
+      @keyframes float-up {
+          0% { transform: translateY(0); opacity: 1; }
+          100% { transform: translateY(-30px); opacity: 0; }
+      }
+      .animate-float-up { animation: float-up 1.5s ease-out forwards; }
+
+      /* Premium HUD: XP gain scale (700ms easeOutExpo) */
+      @keyframes hud-xp-bump {
+          0% { transform: scale(1); }
+          28% { transform: scale(1.06); }
+          100% { transform: scale(1); }
+      }
+      .animate-hud-xp-bump { animation: hud-xp-bump 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      /* Premium HUD: +XP float with Electric Blue pulse */
+      @keyframes hud-xp-float {
+          0% { transform: translateY(0); opacity: 1; filter: drop-shadow(0 0 10px rgba(91, 140, 255, 0.9)); }
+          100% { transform: translateY(-32px); opacity: 0; filter: drop-shadow(0 0 2px rgba(91, 140, 255, 0.2)); }
+      }
+      .animate-hud-xp-float { animation: hud-xp-float 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      /* BP gain: scale bounce */
+      @keyframes hud-bp-bounce {
+          0% { transform: scale(1); }
+          40% { transform: scale(1.08); }
+          100% { transform: scale(1); }
+      }
+      .animate-hud-bp-bounce { animation: hud-bp-bounce 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+      /* Streak +1 glow */
+      @keyframes hud-streak-glow {
+          0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 140, 80, 0.6)); opacity: 1; }
+          50% { filter: drop-shadow(0 0 12px rgba(255, 180, 100, 0.9)); opacity: 1; }
+      }
+      .animate-hud-streak-glow { animation: hud-streak-glow 400ms ease-out forwards; }
+      /* Daily badge pulse (Neon Cyan) */
+      @keyframes hud-daily-pulse {
+          0%, 100% { box-shadow: 0 0 0 rgba(0, 212, 255, 0.3); }
+          50% { box-shadow: 0 0 12px rgba(0, 212, 255, 0.6); }
+      }
+      .animate-hud-daily-pulse { animation: hud-daily-pulse 5s ease-in-out infinite; }
+
+      /* Dashboard: IQ ring pulse + neural glow */
+      @keyframes iq-ring-pulse {
+        0%, 100% { opacity: 0.85; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.02); }
+      }
+      .animate-iq-ring-pulse { animation: iq-ring-pulse 2.5s ease-in-out infinite; }
+      @keyframes iq-glow-soft {
+        0%, 100% { box-shadow: 0 0 30px rgba(91, 140, 255, 0.25), 0 0 50px rgba(167, 139, 250, 0.15); }
+        50% { box-shadow: 0 0 45px rgba(91, 140, 255, 0.4), 0 0 70px rgba(167, 139, 250, 0.25); }
+      }
+      .animate-iq-glow-soft { animation: iq-glow-soft 4s ease-in-out infinite; }
+      @keyframes streak-flame {
+        0%, 100% { opacity: 1; filter: drop-shadow(0 0 4px rgba(255, 140, 80, 0.6)); }
+        50% { opacity: 0.9; filter: drop-shadow(0 0 10px rgba(255, 180, 100, 0.9)); }
+      }
+      .animate-streak-flame { animation: streak-flame 2s ease-in-out infinite; }
+
+      /* Premium AI Processing: orb + particles + step fade */
+      @keyframes orb-breathe {
+        0%, 100% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 40px rgba(91, 140, 255, 0.35), 0 0 80px rgba(167, 139, 250, 0.2); }
+        50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 60px rgba(91, 140, 255, 0.5), 0 0 120px rgba(167, 139, 250, 0.3); }
+      }
+      .animate-orb-breathe { animation: orb-breathe 3s ease-in-out infinite; }
+      @keyframes neural-particle-float {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+        25% { transform: translate(8px, -12px) scale(1.1); opacity: 0.7; }
+        50% { transform: translate(-6px, -20px) scale(0.9); opacity: 0.5; }
+        75% { transform: translate(10px, -8px) scale(1.05); opacity: 0.6; }
+      }
+      .animate-neural-particle { animation: neural-particle-float 4s ease-in-out infinite; }
+      @keyframes processing-step-in {
+        0% { opacity: 0; transform: translateY(8px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      .animate-processing-step-in { animation: processing-step-in 0.5s ease-out forwards; }
+      @keyframes processing-glow-soft {
+        0%, 100% { box-shadow: 0 0 20px rgba(91, 140, 255, 0.15); }
+        50% { box-shadow: 0 0 35px rgba(91, 140, 255, 0.25), 0 0 50px rgba(167, 139, 250, 0.15); }
+      }
+      .animate-processing-glow-soft { animation: processing-glow-soft 2.5s ease-in-out infinite; }
+
+      .pt-safe {
+        padding-top: env(safe-area-inset-top);
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+
+      /* Ошибки парсинга KaTeX — не красным, а нейтральным серым */
+      .katex .katex-error {
+        color: #9AA3B2 !important;
+      }
+      /* Корни в KaTeX: как на calculator screen — без видимых [] и (), индекс как верхний индекс */
+      .katex .sqrt > .root {
+        margin-left: 0.1em;
+        margin-right: -0.2em;
+        font-size: 0.85em;
+        vertical-align: super;
+        line-height: 0;
+      }
+      .katex .sqrt .root::before,
+      .katex .sqrt .root::after {
+        display: none !important;
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "jspdf": "https://esm.sh/jspdf@^2.5.1",
+    "html2canvas": "https://esm.sh/html2canvas@^1.4.1",
+    "katex": "https://esm.sh/katex@0.16.11"
+  }
+}
+</script>
+</head>
+  <body class="bg-[#0F1115] text-[#E6EAF2]">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

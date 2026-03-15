@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AlgebraBrain</string>
+    <string name="title_activity_main">AlgebraBrain</string>
+    <string name="package_name">com.algebrain.tutor</string>
+    <string name="custom_url_scheme">com.algebrain.tutor</string>
+</resources>

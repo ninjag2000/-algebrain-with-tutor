@@ -1,0 +1,9 @@
+{
+  "name": " AlgeBrain with tutor",
+  "description": "A powerful calculator that solves math problems from photos using AI. Just snap a picture of a math equation, and the app will provide a step-by-step solution. It also includes various tools for learning and an AI chat for additional help.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
