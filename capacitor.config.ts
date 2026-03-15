@@ -10,7 +10,7 @@ const config: CapacitorConfig = {
       launchAutoHide: true,
     },
     LiveUpdates: {
-      appId: 'YOUR_APPFLOW_APP_ID', // замени на App ID со страницы приложения в Appflow
+      appId: '3f89caa5',
       channel: 'Production',
       autoUpdateMethod: 'background',
       maxVersions: 2,
