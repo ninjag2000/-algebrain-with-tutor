@@ -2,7 +2,7 @@
   "apps": [
     {
       "appId": "3f89caa5",
-      "webBuildCommand": "npm run build",
+      "webBuildCommand": "npm run appflow:build",
       "iosPath": "ios/App",
       "androidPath": "android"
     }
