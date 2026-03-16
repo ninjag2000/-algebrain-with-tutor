@@ -32,23 +32,42 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 }
 
+function showBootError(message: string, detail?: string) {
+  const el = document.getElementById('root');
+  if (el) {
+    el.innerHTML = `<div style="padding:24px;min-height:100%;background:#0B0F1A;color:#E6E9F2;font-family:system-ui,sans-serif;"><p style="color:#9AA3B2;margin-bottom:8px;">${escapeHtml(message)}</p>${detail ? `<pre style="font-size:12px;overflow:auto;color:#9AA3B2;">${escapeHtml(detail)}</pre>` : ''}<button type="button" onclick="location.reload()" style="margin-top:16px;padding:10px 20px;background:#3A8DFF;color:#fff;border:none;border-radius:8px;font-weight:600;">Обновить</button></div>`;
+  }
+}
+function escapeHtml(s: string) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
 const rootElement = document.getElementById('root');
 if (!rootElement) {
+  showBootError('Не найден элемент #root');
   throw new Error("Could not find root element to mount to");
 }
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <LocalizationProvider>
-        <App />
-      </LocalizationProvider>
-    </ErrorBoundary>
-  </React.StrictMode>
-);
+try {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <React.StrictMode>
+      <ErrorBoundary>
+        <LocalizationProvider>
+          <App />
+        </LocalizationProvider>
+      </ErrorBoundary>
+    </React.StrictMode>
+  );
 
-// Hide native splash as soon as the app has mounted (fixes infinite splash on Android)
-import('@capacitor/splash-screen').then(({ SplashScreen }) => {
-  SplashScreen.hide().catch(() => {});
-}).catch(() => {});
+  // Hide native splash as soon as the app has mounted (fixes infinite splash on Android)
+  import('@capacitor/splash-screen').then(({ SplashScreen }) => {
+    SplashScreen.hide().catch(() => {});
+  }).catch(() => {});
+} catch (err) {
+  const e = err instanceof Error ? err : new Error(String(err));
+  showBootError('Ошибка при запуске', e.message + (e.stack ? '\n' + e.stack : ''));
+  console.error(e);
+}

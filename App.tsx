@@ -55,6 +55,25 @@ import type { SkillKey } from './screens/assessment/types';
 import TopStatusBarHUD from './components/TopStatusBarHUD';
 import FloatingBallWidget from './components/FloatingBallWidget';
 
+/** Безопасное чтение из localStorage (на iOS WebView может быть недоступен). */
+function safeGet(key: string, fallback: string): string {
+  try {
+    const v = localStorage.getItem(key);
+    return v != null ? v : fallback;
+  } catch {
+    return fallback;
+  }
+}
+function safeGetJson<T>(key: string, fallback: T): T {
+  try {
+    const v = localStorage.getItem(key);
+    if (v == null) return fallback;
+    return JSON.parse(v) as T;
+  } catch {
+    return fallback;
+  }
+}
+
 /** Прогресс уровня (0..1) для заданного XP — так же, как в HUD. */
 function getLevelProgressForXp(xpVal: number): number {
   const currentLevel = PLAYER_LEVELS.slice().reverse().find(l => xpVal >= l.minXp) || PLAYER_LEVELS[0];
@@ -71,16 +90,16 @@ const App: React.FC = () => {
   const [clearDialogType, setClearDialogType] = useState<'clearChat' | 'clearHistory' | null>(null);
   const [activeScreen, setActiveScreen] = useState<Screen>(Screen.Scan);
   const cameraStreamRef = useRef<MediaStream | null>(null);
-  
-  const [history, setHistory] = useState<HistoryItem[]>(() => JSON.parse(localStorage.getItem('algebrain_history') || '[]'));
-  const [collection, setCollection] = useState<HistoryItem[]>(() => JSON.parse(localStorage.getItem('algebrain_collection') || '[]'));
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() => JSON.parse(localStorage.getItem('algebrain_chat') || '[]'));
-  const [personalization, setPersonalization] = useState<PersonalizationData | null>(() => JSON.parse(localStorage.getItem('algebrain_personalization') || 'null'));
-  const [xp, setXp] = useState(() => parseInt(localStorage.getItem('algebrain_xp') || '0', 10));
-  const [streak, setStreak] = useState(() => Math.max(0, parseInt(localStorage.getItem('algebrain_streak') || '0', 10)));
-  const [brainPoints, setBrainPoints] = useState(() => parseInt(localStorage.getItem('algebrain_bp') || '0', 10));
-  const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>(() => JSON.parse(localStorage.getItem('algebrain_achievements') || '[]'));
-  const [floatingBallEnabled, setFloatingBallEnabled] = useState(() => localStorage.getItem('algebrain_floating_ball_enabled') === '1');
+
+  const [history, setHistory] = useState<HistoryItem[]>(() => safeGetJson('algebrain_history', []));
+  const [collection, setCollection] = useState<HistoryItem[]>(() => safeGetJson('algebrain_collection', []));
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() => safeGetJson('algebrain_chat', []));
+  const [personalization, setPersonalization] = useState<PersonalizationData | null>(() => safeGetJson('algebrain_personalization', null));
+  const [xp, setXp] = useState(() => parseInt(safeGet('algebrain_xp', '0'), 10));
+  const [streak, setStreak] = useState(() => Math.max(0, parseInt(safeGet('algebrain_streak', '0'), 10)));
+  const [brainPoints, setBrainPoints] = useState(() => parseInt(safeGet('algebrain_bp', '0'), 10));
+  const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>(() => safeGetJson('algebrain_achievements', []));
+  const [floatingBallEnabled, setFloatingBallEnabled] = useState(() => safeGet('algebrain_floating_ball_enabled', '') === '1');
   /** Скриншот для Scan & solve из плавающего шара: после обрезки — переход к решению */
   const [screenshotForScan, setScreenshotForScan] = useState<string | null>(null);
   /** Открыто ли плавающее окно тьютора (Ask tutor из плавающего шара) */

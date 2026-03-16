@@ -244,5 +244,15 @@
   <body class="bg-[#0F1115] text-[#E6EAF2]">
     <div id="root"><div style="display:flex;align-items:center;justify-content:center;height:100%;color:#9AA3B2;font-size:16px;">Загрузка...</div></div>
   <script type="module" src="/index.tsx"></script>
+  <script>
+    (function() {
+      setTimeout(function() {
+        var root = document.getElementById('root');
+        if (root && root.innerText.trim() === 'Загрузка...') {
+          root.innerHTML = '<div style="padding:24px;min-height:100%;background:#0B0F1A;color:#E6E9F2;font-family:system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;"><p style="color:#9AA3B2;margin-bottom:12px;">Приложение не загрузилось.</p><p style="color:#6B7280;font-size:14px;margin-bottom:16px;">Проверьте подключение к интернету и перезапустите.</p><button type="button" onclick="location.reload()" style="padding:10px 20px;background:#3A8DFF;color:#fff;border:none;border-radius:8px;font-weight:600;">Повторить</button></div>';
+        }
+      }, 8000);
+    })();
+  </script>
 </body>
 </html>
