@@ -26,7 +26,8 @@ export default defineConfig(({ mode }) => {
       console.warn('[Vite] OPENROUTER_API_KEY not found. Check', path.join(envDir, '.env.local'), 'has: OPENROUTER_API_KEY=sk-or-v1-...');
     }
     return {
-      base: './', // относительные пути для корректной загрузки в Capacitor/TestFlight
+      // '/' — абсолютные пути; в Capacitor iOS capacitor://localhost/assets/... загружается надёжнее
+      base: '/',
       server: {
         port: 3000,
         host: '0.0.0.0',
