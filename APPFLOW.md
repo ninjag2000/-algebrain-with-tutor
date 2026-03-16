@@ -49,11 +49,16 @@ npx cap sync
 
 1. В [Apple Developer](https://developer.apple.com) создай **Signing Certificate** и **Provisioning Profile** (Development и/или Distribution для App Store).
 2. В Appflow: **Build** → **Signing Certificates** → **Add Profile** — загрузи `.p12`, `.mobileprovision` и пароль. Bundle ID должен совпадать с `com.algebrain.tutor`.
-3. **Build** → **Builds** → **New Build**:
+3. **Capacitor 8 и SPM:** проект использует Swift Package Manager (без CocoaPods). В Appflow нужно включить поддержку SPM:
+   - **Build** → **Environments** → открой окружение, с которым запускаешь сборку (или создай новое).
+   - В **Variables** добавь: имя `ENABLE_SPM_SUPPORT`, значение `true`.
+   - Сохрани. Без этой переменной сборка падает с ошибкой «No .xcworkspace found».
+4. **Build** → **Builds** → **New Build**:
    - Выбери коммит (с уже подставленным `appId` в конфигах).
    - Платформа: **iOS**.
    - Тип: **Development** (тест на устройстве) или **App Store** (для загрузки в App Store).
-   - Выбери созданный профиль подписи и стек сборки.
+   - Выбери созданный профиль подписи и **окружение с ENABLE_SPM_SUPPORT=true**.
+   - Выбери стек сборки.
 
 Сборка выполнится в облаке; по окончании можно скачать `.ipa`.
 

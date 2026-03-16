@@ -15,6 +15,14 @@ dist-ssr
 .env.local
 .env.*.local
 
+# Apple signing (never commit)
+private.key
+request.csr
+*.p12
+certificate.pem
+*.cer
+*.mobileprovision
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
